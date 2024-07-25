@@ -12,7 +12,8 @@
 * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 * See the License for the specific language governing permissions and
 * limitations under the License.
- */
+*/
+
 package org.wso2.carbon.inbound.poll.dbeventlistener;
 
 import org.apache.axiom.om.OMAbstractFactory;
@@ -59,6 +60,10 @@ public class DBEventPollingConsumer extends GenericPollingConsumer {
     private String connectionValidationQuery = null;
     private String tableName = null;
 
+
+
+
+
     /**
      * @param properties
      * @param name
@@ -70,8 +75,8 @@ public class DBEventPollingConsumer extends GenericPollingConsumer {
      * @param sequential
      */
     public DBEventPollingConsumer(Properties properties, String name, SynapseEnvironment synapseEnvironment,
-            long scanInterval, String injectingSeq, String onErrorSeq, boolean coordination,
-            boolean sequential) {
+                                  long scanInterval, String injectingSeq, String onErrorSeq, boolean coordination,
+                                  boolean sequential) {
         super(properties, name, synapseEnvironment, scanInterval, injectingSeq, onErrorSeq, coordination, sequential);
         driverClass = properties.getProperty(DBEventConstants.DB_DRIVER);
         dbURL = properties.getProperty(DBEventConstants.DB_URL);
@@ -157,8 +162,8 @@ public class DBEventPollingConsumer extends GenericPollingConsumer {
             log.info("Creating message context.");
         }
         MessageContext msgCtx = synapseEnvironment.createMessageContext();
-        org.apache.axis2.context.MessageContext axis2MsgCtx
-                = ((org.apache.synapse.core.axis2.Axis2MessageContext) msgCtx).getAxis2MessageContext();
+        org.apache.axis2.context.MessageContext axis2MsgCtx =
+                ((org.apache.synapse.core.axis2.Axis2MessageContext) msgCtx).getAxis2MessageContext();
         axis2MsgCtx.setServerSide(true);
         axis2MsgCtx.setMessageID(UUIDGenerator.getUUID());
         msgCtx.setProperty(org.apache.axis2.context.MessageContext.CLIENT_API_NON_BLOCKING, true);
@@ -167,8 +172,7 @@ public class DBEventPollingConsumer extends GenericPollingConsumer {
     }
 
     /**
-     * Execute the query to retrieve the records, create each record as
-     * OMElement and inject to the sequence
+     * Execute the query to retrieve the records, create each record as OMElement and inject to the sequence
      */
     private void fetchDataAndInject() {
         PreparedStatement statement = null;
@@ -303,7 +307,7 @@ public class DBEventPollingConsumer extends GenericPollingConsumer {
      * @return query
      */
     private String buildQuery(String tableName, String filteringCriteria, String filteringColumnName,
-            String lastUpdatedTimestampFromRegistry) {
+                              String lastUpdatedTimestampFromRegistry) {
         if (log.isDebugEnabled()) {
             log.info("Building the SELECT query to fetch the data change.");
         }
